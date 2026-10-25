@@ -1,0 +1,31 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam ArrowColor #315D49
+skinparam classBackgroundColor #EFF4E8
+skinparam componentBackgroundColor #EFF4E8
+component "Interfaz React" as UI
+component "API Express" as API
+component "Autenticacion y permisos" as Auth
+component "Pacientes y citas" as P
+component "Tratamientos y procedimientos" as T
+component "Facturacion y pagos" as F
+component "Recordatorios" as N
+component "Acceso a datos pg" as PG
+database PostgreSQL as DB
+cloud "Servidor SMTP" as SMTP
+UI --> API : HTTP / JSON
+API --> Auth
+API --> P
+API --> T
+API --> F
+API --> N
+P --> PG
+T --> PG
+F --> PG
+N --> PG
+PG --> DB
+N --> SMTP
+@enduml

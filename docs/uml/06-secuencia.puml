@@ -1,0 +1,34 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam ArrowColor #315D49
+skinparam classBackgroundColor #EFF4E8
+skinparam componentBackgroundColor #EFF4E8
+actor Recepcion
+boundary React
+control API
+ database PostgreSQL
+Recepcion -> React : Registrar abono
+React -> API : POST /invoices/:id/payments
+API -> API : Autenticar y autorizar
+API -> PostgreSQL : BEGIN
+API -> PostgreSQL : SELECT factura FOR UPDATE
+API -> PostgreSQL : Consultar clave idempotente
+alt Pago existente con los mismos datos
+ API -> PostgreSQL : COMMIT
+ API --> React : Comprobante existente
+else Pago nuevo
+ API -> PostgreSQL : Consultar total y pagos
+ alt Importe positivo y no supera saldo
+  API -> PostgreSQL : INSERT pago y auditoria
+  API -> PostgreSQL : COMMIT
+  API --> React : Comprobante
+ else Importe invalido
+  API -> PostgreSQL : ROLLBACK
+  API --> React : Error 400
+ end
+end
+React --> Recepcion : Mostrar resultado
+@enduml

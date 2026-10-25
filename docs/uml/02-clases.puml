@@ -1,0 +1,103 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam ArrowColor #315D49
+skinparam classBackgroundColor #EFF4E8
+skinparam componentBackgroundColor #EFF4E8
+hide methods
+class Usuario {
+ id: integer
+ name: text
+ email: text
+ password_hash: text
+ role: admin | reception | dentist
+ active: boolean
+}
+class Paciente {
+ id: integer
+ first_name: text
+ last_name: text
+ birth_date: date
+ phone: text
+ address: text
+ email: text
+ reminder_consent: boolean
+ active: boolean
+}
+class Tratamiento {
+ id: integer
+ name: text
+ description: text
+ price_cents: integer
+ duration_minutes: integer
+ active: boolean
+}
+class Cita {
+ id: integer
+ starts_at: timestamptz
+ ends_at: timestamptz
+ status: text
+ cancellation_reason: text
+}
+class Procedimiento {
+ id: integer
+ performed_at: timestamptz
+ notes: text
+ price_cents: integer
+}
+class Factura {
+ id: integer
+ created_at: timestamptz
+ voided: boolean
+ void_reason: text
+}
+class DetalleFactura {
+ id: integer
+ description: text
+ amount_cents: integer
+ released: boolean
+}
+class Pago {
+ id: integer
+ amount_cents: integer
+ method: text
+ reference: text
+ idempotency_key: uuid
+ created_at: timestamptz
+}
+class Notificacion {
+ id: integer
+ scheduled_at: timestamptz
+ status: text
+ attempts: integer
+ sent_at: timestamptz
+ body: text
+}
+class Auditoria {
+ id: bigint
+ action: text
+ entity: text
+ entity_id: integer
+ created_at: timestamptz
+}
+Paciente "1" -- "0..*" Cita
+Usuario "1" -- "0..*" Cita : dentista
+Tratamiento "1" -- "0..*" Cita
+Paciente "1" -- "0..*" Procedimiento
+Usuario "1" -- "0..*" Procedimiento : realiza
+Tratamiento "1" -- "0..*" Procedimiento
+Cita "0..1" -- "0..*" Procedimiento
+Paciente "1" -- "0..*" Factura
+Factura "1" *-- "1..*" DetalleFactura
+Procedimiento "1" -- "0..*" DetalleFactura
+Factura "1" -- "0..*" Pago
+Usuario "1" -- "0..*" Pago : registra
+Cita "1" -- "0..*" Notificacion
+Usuario "0..1" -- "0..*" Auditoria
+note right of DetalleFactura
+Solo una linea no liberada por procedimiento.
+El saldo se calcula; no se almacena.
+end note
+@enduml

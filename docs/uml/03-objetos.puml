@@ -1,0 +1,27 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam ArrowColor #315D49
+skinparam classBackgroundColor #EFF4E8
+skinparam componentBackgroundColor #EFF4E8
+object "ana:Paciente" as P {
+ first_name = Ana
+ last_name = Lopez
+}
+object "sofia:Usuario" as D {
+ role = dentist
+}
+object "limpieza:Tratamiento" as T {
+ price_cents = 30000
+ duration_minutes = 45
+}
+object "cita:Cita" as C {
+ status = scheduled
+ starts_at = 2026-11-02 09:00 -06:00
+}
+P -- C
+D -- C
+T -- C
+@enduml

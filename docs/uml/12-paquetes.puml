@@ -1,0 +1,29 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam ArrowColor #315D49
+skinparam classBackgroundColor #EFF4E8
+skinparam componentBackgroundColor #EFF4E8
+package Presentacion as P
+package Aplicacion as A
+package Dominio as D
+package Infraestructura as I
+P ..> A
+A ..> D
+A ..> I
+I ..> D
+note bottom of A
+Implementacion: server/index.js
+rutas y coordinacion transaccional
+end note
+note bottom of D
+Esquemas Zod y reglas de negocio.
+Integridad en schema.sql.
+end note
+note bottom of I
+server/db.js y reminders.js
+pg, bcrypt, JWT y SMTP.
+end note
+@enduml

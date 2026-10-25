@@ -1,0 +1,26 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam ArrowColor #315D49
+skinparam classBackgroundColor #EFF4E8
+skinparam componentBackgroundColor #EFF4E8
+package "Perfil DentalGest" <<profile>> {
+ class "Class" as C <<metaclass>>
+ class "Property" as P <<metaclass>>
+ class "Operation" as O <<metaclass>>
+ class "EntidadPersistente" as E <<stereotype>> {
+  tabla: String
+ }
+ class "DatoSensible" as S <<stereotype>> {
+  categoria: String
+ }
+ class "OperacionAuditable" as A <<stereotype>> {
+  evento: String
+ }
+ E --|> C : <<extension>>
+ S --|> P : <<extension>>
+ A --|> O : <<extension>>
+}
+@enduml

@@ -1,0 +1,32 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam ArrowColor #315D49
+skinparam classBackgroundColor #EFF4E8
+skinparam componentBackgroundColor #EFF4E8
+start
+:<<interaction>>
+Autenticar usuario;
+if (Acceso autorizado?) then (si)
+ :<<interaction>>
+Consultar paciente;
+ :<<interaction>>
+Programar cita;
+ if (Cita cancelada?) then (si)
+  :<<interaction>>
+Cancelar recordatorios;
+ else (no)
+  :<<interaction>>
+Registrar procedimiento;
+  :<<interaction>>
+Emitir factura;
+  :<<interaction>>
+Registrar pagos;
+ endif
+else (no)
+ :Mostrar acceso denegado;
+endif
+stop
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam ArrowColor #315D49
+skinparam classBackgroundColor #EFF4E8
+skinparam componentBackgroundColor #EFF4E8
+robust "Cita" as C
+robust "Recordatorio" as R
+@0
+C is Programada
+R is Pendiente
+@1
+C is Confirmada
+@24
+R is Procesando
+@25
+R is Enviado
+@48
+C is Atendida
+@49
+C is Atendida
+R is Enviado
+highlight 24 to 25 : envio 24 horas antes
+@enduml

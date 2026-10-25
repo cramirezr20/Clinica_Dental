@@ -1,0 +1,22 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam ArrowColor #315D49
+skinparam classBackgroundColor #EFF4E8
+skinparam componentBackgroundColor #EFF4E8
+[*] --> Programada
+Programada --> Confirmada : confirmar
+Programada --> Programada : reprogramar [disponible]
+Confirmada --> Programada : reprogramar [disponible]
+Programada --> Cancelada : cancelar [motivo]
+Confirmada --> Cancelada : cancelar [motivo]
+Programada --> Atendida : finalizar [procedimiento registrado]
+Confirmada --> Atendida : finalizar [procedimiento registrado]
+Programada --> NoAsistio : registrar ausencia [inicio alcanzado]
+Confirmada --> NoAsistio : registrar ausencia [inicio alcanzado]
+Atendida --> [*]
+Cancelada --> [*]
+NoAsistio --> [*]
+@enduml

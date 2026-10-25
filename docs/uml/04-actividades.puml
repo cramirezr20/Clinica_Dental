@@ -1,0 +1,32 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam ArrowColor #315D49
+skinparam classBackgroundColor #EFF4E8
+skinparam componentBackgroundColor #EFF4E8
+start
+:Identificar paciente;
+:Consultar cita;
+if (Cita vigente?) then (si)
+ :Realizar atencion;
+ :Registrar procedimientos y precio historico;
+ :Finalizar cita;
+ :Seleccionar procedimientos no facturados;
+ :Emitir factura;
+ while (Paciente desea abonar y existe saldo?) is (si)
+  :Capturar importe y metodo;
+  if (Importe positivo y menor o igual al saldo?) then (si)
+   :Registrar pago en transaccion;
+   :Calcular saldo;
+   :Emitir comprobante;
+  else (no)
+   :Mostrar error;
+  endif
+ endwhile (no)
+else (no)
+ :Informar estado;
+endif
+stop
+@enduml

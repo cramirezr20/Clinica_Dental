@@ -1,0 +1,37 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam ArrowColor #315D49
+skinparam classBackgroundColor #EFF4E8
+skinparam componentBackgroundColor #EFF4E8
+node "Equipo Windows del usuario" {
+ node "Navegador" as N
+ node "Node.js" {
+  artifact "React compilado / dist" as UI
+  artifact "Express / API" as API
+  artifact "Temporizador de recordatorios" as W
+ }
+ node "PostgreSQL aislado :55432" {
+  database dentalgest_development as D
+  database dentalgest_test as T
+  database dentalgest_staging as S
+  database dentalgest_production as P
+ }
+ folder "Respaldos locales" as B
+}
+cloud "SMTP externo (opcional)" as SMTP
+N --> UI : HTTP loopback
+N --> API : HTTP loopback
+API --> D : development :4100
+API --> T : test :4101
+API --> S : staging :4102
+API --> P : production local :4103
+W --> SMTP : TLS
+P --> B : pg_dump
+note bottom of API
+Internet: desplegar detras de HTTPS,
+rotar credenciales y configurar respaldos.
+end note
+@enduml

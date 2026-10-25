@@ -1,0 +1,23 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam ArrowColor #315D49
+skinparam classBackgroundColor #EFF4E8
+skinparam componentBackgroundColor #EFF4E8
+component "Coordinador de citas" {
+ portin "API /appointments" as Entrada
+ component "schedule()" as S
+ component "Validacion Zod" as V
+ component "transaction()" as TX
+ component "Planificador recordatorio" as N
+ portout "PostgreSQL" as DB
+ Entrada --> V
+ V --> S
+ S --> TX
+ S --> N
+ TX --> DB
+ N --> DB
+}
+@enduml

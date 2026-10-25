@@ -1,0 +1,50 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam ArrowColor #315D49
+skinparam classBackgroundColor #EFF4E8
+skinparam componentBackgroundColor #EFF4E8
+left to right direction
+actor Administrador as Admin
+actor Recepcion
+actor Dentista
+actor Paciente
+actor "Proveedor de correo" as Proveedor
+rectangle DentalGest {
+ usecase "Autenticarse" as Login
+ usecase "Gestionar usuarios" as U
+ usecase "Gestionar pacientes" as P
+ usecase "Consultar historial" as H
+ usecase "Gestionar citas" as C
+ usecase "Validar disponibilidad" as V
+ usecase "Gestionar catalogo" as T
+ usecase "Registrar procedimiento" as PR
+ usecase "Emitir factura" as F
+ usecase "Registrar pagos parciales" as PA
+ usecase "Validar saldo" as S
+ usecase "Enviar recordatorio" as N
+}
+Admin --> Login
+Recepcion --> Login
+Dentista --> Login
+Admin --> U
+Admin --> T
+Admin --> P
+Admin --> C
+Admin --> PR
+Admin --> F
+Admin --> PA
+Recepcion --> P
+Recepcion --> C
+Recepcion --> F
+Recepcion --> PA
+Dentista --> H
+Dentista --> C
+Dentista --> PR
+C ..> V : <<include>>
+PA ..> S : <<include>>
+Proveedor -- N
+Paciente -- N : recibe
+@enduml
